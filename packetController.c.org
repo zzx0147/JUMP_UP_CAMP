@@ -1,0 +1,33 @@
+#include "packet.h"
+#include "extern.h"
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+#define SYS_ID 2
+
+void makeCmdInfo(TYPE_PACKET* tempPacket, int sensor, char *tempdata)
+{
+	int i = 0;
+	tempPacket->flag = CMD_INFO;
+	tempPacket->sys_id = SYS_ID;
+	tempPacket->sen_id = sensor;
+	tempPacket->timestamp = time(NULL);
+
+	for(i=0; i < 4 ; i++){
+		tempPacket->data[i]=tempdata[i];
+	}
+	printf("make data %s\n",tempPacket->data);
+
+}
+
+void printCmd(TYPE_PACKET* dataPacket)
+{
+	int i=0;
+ 	char *p = (char *)dataPacket->data;
+	printf(" \n %s \n", p);
+	printf(" %d,%d,%d,%ld,            %s %p \n",dataPacket->flag,dataPacket->sys_id,dataPacket->sen_id,dataPacket->timestamp , p, p);
+//				, dataPacket->data);
+        printf(" %p,%p,%p,%p,            %p\n",&dataPacket->flag,&dataPacket->sys_id,&dataPacket->sen_id,&dataPacket->timestamp,dataPacket->data);
+	printf("%s",dataPacket->data);
+	puts(dataPacket->data);
+}
